@@ -3,7 +3,7 @@ $config = array(
 	'servername' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'petcoffe'
+	'database' => 'petcoffee'
 );
 
 $shop_config = array(

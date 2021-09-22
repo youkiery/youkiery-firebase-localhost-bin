@@ -31,6 +31,15 @@ function all($sql) {
   return $list;
 }
 
+function arr($sql, $name) {
+  global $mysqli;
+  $list = array();
+  $query = $mysqli->query($sql);
+
+  while ($row = $query->fetch_assoc()) $list[]= $row[$name];
+  return $list;
+}
+
 function objlist($sql, $name = '') {
   global $mysqli;
   $list = array();

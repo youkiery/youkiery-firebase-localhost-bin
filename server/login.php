@@ -74,7 +74,7 @@ else {
         $workUnread = $work->getNotifyUnread();
         $kaizenUnread = $kaizen->getNotifyUnread();
         $result['clock'] = $ride->getClock();
-        $result['type'] = $spa->getTypeList();
+        // $result['type'] = $spa->getTypeList();
         $result['disease'] = $vaccine->diseaseList();
         $result['workrole'] = $work->getRole();
         $result['kaizenrole'] = $kaizen->getRole();

@@ -3,51 +3,9 @@ class Spa extends Module {
   function __construct() {
     parent::__construct();
     $this->module = 'spa';
-    $this->spa_option = array(
-      "wash_dog" => "Tắm chó",
-      "wash_cat" => "Tắm mèo",
-      "wash_white" => "Tắm trắng",
-      "cut_fur" => "Cắt lông",
-      "shave_foot" => "Cạo lông chân",
-      "shave_fur" => "Cạo ông",
-      "cut_claw" => "Cắt, dũa móng",
-      "cut_curly" => "Cắt lông rối",
-      "wash_ear" => "Vệ sinh tai",
-      "wash_mouth" => "Vệ sinh răng miệng",
-      "paint_footear" => "Nhuộm chân, tai",
-      "paint_all" => "Nhuộm toàn thân",
-      "pin_ear" => "Bấm lỗ tai",
-      "cut_ear" => "Cắt lông tai",
-      "dismell" => "Vắt tuyết hôi"
-    );
     $this->prefix = 'pet_' . $this->table .'_'. $this->module;
     $this->role = $this->getRole();
   }
-
-  // tắm, tỉa, cắt móng, vệ sinh tai, vắt tuyến hôi, nhuộm lông, cắt lông bàn chân, cắt lông rối, vệ sinh răng miệng, combo
-  // function getList($time) {
-  //   $list = array();
-    
-  //   $time = strtotime(date('Y/m/d', $time));
-  //   $end = $time + 60 * 60 * 24 - 1;
-  //   $sql = 'select id, customerid, note, type, done from `pet_test_spa` where time between '. $time .' and '. $end;
-  //   // die($sql);
-  //   $query = $this->db->query($sql);
-  //   $type = $this->getTypeObject();
-
-  //   while ($row = $query->fetch_assoc()) {
-  //     // echo $row['done'] . '<br>';
-  //     $row['type'] = $this->parseType($row['type'], $type);
-  //     $customer = $this->getCustonerId($row['customerid']);
-  //     $row['name'] = $customer['name'];
-  //     $row['phone'] = $customer['phone'];
-  //     if ($row['done']) $row['time'] = date('H:i', $row['done']);
-  //     else $row['time'] = 'Chưa xong';
-  //     $list []= $row;
-  //   } 
-
-  //   return $list;
-  // }
 
   function parseType($string, $type) {
     $type_array = explode(',', $string);
@@ -61,28 +19,14 @@ class Spa extends Module {
     return $string;
   }
 
-  function getTypeList() {
+  function getType() {
     $list = array();
-    $sql = 'select * from `pet_test_spa_type`';
-    $query = $this->db->query($sql);
+    $sql = "select id, value from `pet_test_config` where module = 'spa'";
+    $query = query($sql);
 
     while ($row = $query->fetch_assoc()) {
-      $list []= array(
-        'id' => $row['id'],
-        'name' => $row['name'],
-        'value' => 0
-      );
-    }
-    return $list;
-  }
-
-  function getTypeObject() {
-    $list = array();
-    $sql = 'select * from `pet_test_spa_type`';
-    $query = $this->db->query($sql);
-
-    while ($row = $query->fetch_assoc()) {
-      $list [$row['id']]= $row['name'];
+      $row ['check'] = 0;
+      $list[]= $row;
     }
     return $list;
   }
@@ -102,58 +46,50 @@ class Spa extends Module {
   
     $time = strtotime(date('Y/m/d', $data->time / 1000));
     $end = $time + 60 * 60 * 24 - 1;
-    $sql = 'select a.*, b.name, b.phone, c.first_name as user from `pet_test_spa` a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where time between '. $time .' and '. $end;
-    $spa = $this->all($sql);
+    $sql = "select a.*, b.name, b.phone, c.first_name as user from `pet_test_spa` a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where time between $time and $end order by utime desc";
+    $spa = all($sql);
   
+    $sql = "select * from pet_test_config where module = 'spa'";
+    $option_list = obj($sql, 'name');
+
     $list = array();
     foreach ($spa as $row) {
-      $option = array();
-      $service = array();
-      foreach ($this->spa_option as $key => $value) {
-        if ($row[$key]) $service []= $this->spa_option[$key];
-        $option[] = array(
-          'name' => $key,
-          'value' => $this->spa_option[$key],
-          'check' => intval($row[$key])
-        );
-      }
+      $sql = "select b.value from pet_test_spa_row a inner join pet_test_config b on a.spaid = $row[id] and a.typeid = b.id";
+      $service = arr($sql, 'value');
+
+      $sql = "select b.id from pet_test_spa_row a inner join pet_test_config b on a.spaid = $row[id] and a.typeid = b.id";
+      $option = arr($sql, 'id');
+
+      $sql = "select name, phone from pet_test_customer where id = $row[customerid2]";
+      $c = fetch($sql);
+
+      $sql = "select first_name as name from pet_users where userid = $row[luser]";
+      $u = fetch($sql);
+
+      $sql = "select first_name as name from pet_users where userid = $row[duser]";
+      $d = fetch($sql);
+
       $image = explode(', ', $row['image']);
       $list []= array(
         'id' => $row['id'],
         'name' => $row['name'],
         'phone' => $row['phone'],
+        'name2' => (empty($c['name']) ? '' : $c['name']),
+        'phone2' => (empty($c['phone']) ? '' : $c['phone']),
         'user' => $row['user'],
         'note' => $row['note'],
+        'ltime' => (empty($u['name']) ? '' : date('d/m/Y H:i', $row['ltime'])),
+        'luser' => (empty($u['name']) ? '' : $u['name']),
+        'duser' => (empty($d['name']) ? '' : $d['name']),
         'status' => $row['status'],
         'weight' => $row['weight'],
         'image' => (count($image) && !empty($image[0]) ? $image : array()),
         'time' => date('H:i', $row['time']),
         'option' => $option,
-        'service' => implode(', ', $service)
+        'service' => (count($service) ? implode(', ', $service) : '-')
       );
     }
   
-    return $list;
-  }
-
-  public function fetch($sql) {
-    $query = $this->db->query($sql);
-    return $query->fetch_assoc();
-  }
-
-  public function insertid($sql) {
-    $this->db->query($sql);
-    return $this->db->insert_id();
-  }
-
-  public function query($sql) {
-    return $this->db->query($sql);
-  }
-
-  public function all($sql) {
-    $list = array();
-    $query = $this->db->query($sql);
-    while ($row = $query->fetch_assoc()) $list []= $row;
     return $list;
   }
 }
