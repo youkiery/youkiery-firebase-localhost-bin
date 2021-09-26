@@ -3,38 +3,16 @@
 require_once(ROOTDIR .'/vaccine.php');
 $vaccine = new Vaccine();
 
-$data = array(
-  'id' => parseGetData('id'),
-  'disease' => parseGetData('disease'),
-  'calltime' => parseGetData('calltime')
-);
-$data['calltime'] = totime($data['calltime']);
+$data->cometime = totime($data->cometime);
+$data->calltime = totime($data->calltime);
 
-$sql = 'update `pet_test_vaccine` set calltime = '. $data['calltime'] .', diseaseid = '. $data['disease'] .' where id = '. $data['id'];
-$mysqli->query($sql);
-
-$start = strtotime(date('Y/m/d'));
-$end = time();
-
-$sql = 'select * from pet_test_vaccine where (ctime between '. $start . ' and '. $end . ') and status = 0 limit 50';
-$query = $mysqli->query($sql);
-$list = array();
-
-$disease = $vaccine->getDiseaseList();
-
-while ($row = $query->fetch_assoc()) {
-  $pet = $vaccine->getPetId($row['petid']);
-  $customer = $vaccine->getCustonerId($pet['customerid']);
-  if (!empty($customer['phone'])) {
-    $list []= array(
-      'id' => $row['id'],
-      'name' => $customer['name'],
-      'number' => $customer['phone'],
-      'vaccine' => $disease[$row['diseaseid']],
-      'calltime' => date('d/m/Y', $row['calltime']),
-    );
-  }
-}
-
+$sql = "update pet_test_vaccine set typeid = $data->type, cometime = $data->cometime, calltime = $data->calltime where id = $data->id";
+query($sql);
 $result['status'] = 1;
-$result['new'] = $list;
+if (!empty($data->prv)) {
+  $result['list'] = $vaccine->gettemplist();
+}
+else {
+  $result['list'] = $vaccine->getlist();
+  $result['new'] = $vaccine->getlist(true);
+}

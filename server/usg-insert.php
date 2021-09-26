@@ -47,15 +47,6 @@ if (empty($pet)) {
   $data['pet'] = $mysqli->insert_id;
 }
 
-// // kiểm tra nếu đã có thì tick luôn
-// $sql = 'select * from `'. $usg->prefix .'` where diseaseid = '. $data['disease'] .' and petid = '. $pet['id'] .' and status < 2 order by calltime desc limit 1';
-// $query = $mysqli->query($sql);
-
-// if (!empty($row = $query->fetch_assoc())) {
-//   $sql = 'update `'. $usg->prefix .'` set status = 2, recall = '. $data['cometime'] .' where diseaseid = '. $data['disease'] .' and petid = '. $pet['id'] .' and status < 2';
-//   $mysqli->query($sql);
-// }
-
 $sql = "INSERT INTO `pet_test_usg2` (petid, doctorid, usgtime, expecttime, expectnumber, vaccinetime, image, status, note, time) VALUES ($data[pet], $userid, $data[cometime], $data[calltime], $data[number], 0, '', 0, '$data[note]', " . time() . ")";
 
 $mysqli->query($sql);

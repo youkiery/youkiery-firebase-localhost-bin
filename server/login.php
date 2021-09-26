@@ -75,7 +75,7 @@ else {
         $kaizenUnread = $kaizen->getNotifyUnread();
         $result['clock'] = $ride->getClock();
         // $result['type'] = $spa->getTypeList();
-        $result['disease'] = $vaccine->diseaseList();
+        $result['type'] = $vaccine->typeList();
         $result['workrole'] = $work->getRole();
         $result['kaizenrole'] = $kaizen->getRole();
         $result['schedulerole'] = $schedule->role;

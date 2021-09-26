@@ -39,9 +39,12 @@ $inputJSON = file_get_contents('php://input');
 $data = json_decode($inputJSON);
 
 if (isset($_GET['action']) && !empty($_GET['action'])) $action = $_GET['action'];
+else if (isset($_POST['action']) && !empty($_POST['action'])) $action = $_POST['action'];
 else if (!empty($data->action)) $action = $data->action;
+
 if (isset($_GET['action']) && !empty($_GET['userid'])) $userid = $_GET['userid'];
 else if (!empty($data->userid)) $userid = $data->userid;
+if (isset($_POST['action']) && !empty($_POST['userid'])) $userid = $_POST['userid'];
 
 
 if (!empty($action)) {
