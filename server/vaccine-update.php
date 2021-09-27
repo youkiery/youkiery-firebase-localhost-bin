@@ -6,7 +6,7 @@ $vaccine = new Vaccine();
 $data->cometime = totime($data->cometime);
 $data->calltime = totime($data->calltime);
 
-$sql = "update pet_test_vaccine set typeid = $data->type, cometime = $data->cometime, calltime = $data->calltime where id = $data->id";
+$sql = "update pet_test_vaccine2 set typeid = $data->type, cometime = $data->cometime, calltime = $data->calltime where id = $data->id";
 query($sql);
 $result['status'] = 1;
 if (!empty($data->prv)) {

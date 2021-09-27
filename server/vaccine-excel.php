@@ -15,8 +15,10 @@ $x = array(
 );
 $xr = array(0 => 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
 
-include ROOTDIR .'PHPExcel/IOFactory.php';
-$inputFileName = ROOTDIR .'upload/ChiTietHoaDon_HD250167_KV24092021-103818-243.xlsx';
+$dir = str_replace('/server/', '/', ROOTDIR);
+
+include $dir .'PHPExcel/IOFactory.php';
+$inputFileName = $dir .'upload/ChiTietHoaDon_HD250167_KV24092021-103818-243.xlsx';
   
 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -77,7 +79,7 @@ foreach ($data as $row) {
   if (count($date) == 3) $calltime = strtotime("$date[0]/$date[1]/$date[2]");
   else $calltime = time();
 
-  echo "insert into pet_test_vaccine (customerid, typeid, cometime, calltime, note, status, recall, userid, time, called) values($c[id], ". $type[$row[0]] .", $cometime, $calltime, '', 5, $calltime, ". $doctor[$row[1]] .", ". time() .", 0) <br>";
+  echo "insert into pet_test_vaccine2 (customerid, typeid, cometime, calltime, note, status, recall, userid, time, called) values($c[id], ". $type[$row[0]] .", $cometime, $calltime, '', 5, $calltime, ". $doctor[$row[1]] .", ". time() .", 0) <br>";
 }
 die();
 

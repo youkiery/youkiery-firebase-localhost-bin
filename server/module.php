@@ -19,14 +19,14 @@ class Module {
   function setLastRead($time) {
     $read = $this->checkLastRead();
     
-    if ($read) $sql = 'update `pet_test_notify_read` set time = '. $time .' where userid = '. $this->userid . ' and module = "'. $this->module .'"';
-    else $sql = 'insert into `pet_test_notify_read` (userid, module, time) values ('. $this->userid .',  "'. $this->module .'", '. $time .')';
+    if ($read) $sql = 'update pet_test_notify_read set time = '. $time .' where userid = '. $this->userid . ' and module = "'. $this->module .'"';
+    else $sql = 'insert into pet_test_notify_read (userid, module, time) values ('. $this->userid .',  "'. $this->module .'", '. $time .')';
     // die($sql);
     $this->db->query($sql);
   }
 
   function checkLastRead() {
-    $sql = 'select * from `pet_test_notify_read` where module = "'. $this->module .'" and userid = '. $this->userid;
+    $sql = 'select * from pet_test_notify_read where module = "'. $this->module .'" and userid = '. $this->userid;
     $query = $this->db->query($sql); 
     $read = $query->fetch_assoc();
     if (!empty($read)) {
@@ -37,7 +37,7 @@ class Module {
 
   function employ_list() {
     $list = array();
-    $sql = 'select a.userid, b.username as username, concat(last_name, " ", first_name) as name from `pet_test_user` a inner join `pet_users` b on a.userid = b.userid group by userid';
+    $sql = 'select a.userid, b.username as username, concat(last_name, " ", first_name) as name from pet_test_user a inner join pet_users b on a.userid = b.userid group by userid';
 
     $query = $this->db->query($sql);
     while ($row = $query->fetch_assoc()) {
@@ -47,13 +47,13 @@ class Module {
   }
   
   function insertNotify($action, $targetid, $time) {
-    $sql = 'insert into `pet_test_notify` (userid, action, workid, module, time) values ('. $this->userid .', '. $action .', '. $targetid .', "'. $this->module .'", '. $time .')';
+    $sql = 'insert into pet_test_notify (userid, action, workid, module, time) values ('. $this->userid .', '. $action .', '. $targetid .', "'. $this->module .'", '. $time .')';
     $this->db->query($sql);
     $this->setLastUpdate($time);
   }
 
   function setLastUpdate($time) {
-    $sql = 'update `pet_test_notify_last` set time = "'. $time .'" where module = "'. $this->module .'"';
+    $sql = 'update pet_test_notify_last set time = "'. $time .'" where module = "'. $this->module .'"';
     $this->db->query($sql);
   }
 
@@ -65,11 +65,11 @@ class Module {
   }
 
   function getLastUpdate() {
-    $sql = 'select * from `pet_test_notify_last` where module = "'. $this->module .'"';
+    $sql = 'select * from pet_test_notify_last where module = "'. $this->module .'"';
     $query = $this->db->query($sql);
     $config = $query->fetch_assoc();
     if (empty($config)) {
-      $sql = 'insert into `pet_test_notify_last` (module, time) values ("'. $this->module .'", 0)';
+      $sql = 'insert into pet_test_notify_last (module, time) values ("'. $this->module .'", 0)';
       $this->db->query($sql);
       $config = array('time' => 0);
     }
@@ -78,11 +78,11 @@ class Module {
   }
 
   function getNotifyTime() {
-    $sql = 'select * from `pet_test_notify_read` where module = "'. $this->module .'" and userid = ' . $this->userid;
+    $sql = 'select * from pet_test_notify_read where module = "'. $this->module .'" and userid = ' . $this->userid;
     $query = $this->db->query($sql);
 
     if (empty($row = $query->fetch_assoc())) {
-      $sql = 'insert into `pet_test_notify_read` (userid, module, time) values ('. $this->userid .', "'. $this->module .'", 1)';
+      $sql = 'insert into pet_test_notify_read (userid, module, time) values ('. $this->userid .', "'. $this->module .'", 1)';
       $this->db->query($sql);
       $row = array(
         'time' => 1
@@ -96,7 +96,7 @@ class Module {
 
     $xtra = '';
     if (!$this->role) $xtra = 'and userid = '. $this->userid;
-    $sql = 'select id from `pet_test_notify` where module = "'. $this->module .'" and time > ' . $time . ' ' . $xtra;
+    $sql = 'select id from pet_test_notify where module = "'. $this->module .'" and time > ' . $time . ' ' . $xtra;
     // die($sql);
     $query = $this->db->query($sql);
 
@@ -107,12 +107,12 @@ class Module {
     global $action;
     // kiểm tra thời gian sử dụng chức năng, trừ lúc login
     if ($action !== 'login') {
-      $sql = 'select * from `pet_setting_config_module` where branchid = ' . $this->branchid . ' and module = "'. $this->module .'"';
+      $sql = 'select * from pet_setting_config_module where branchid = ' . $this->branchid . ' and module = "'. $this->module .'"';
       $query = $this->db->query($sql);
       $config = $query->fetch_assoc();
 
       if (empty($config)) {
-        $sql = 'insert into `pet_setting_config_module` (branchid, module, start, end) values ("'. $this->branchid .'", "'. $this->module .'", "0-0", "0-0")';
+        $sql = 'insert into pet_setting_config_module (branchid, module, start, end) values ("'. $this->branchid .'", "'. $this->module .'", "0-0", "0-0")';
         $this->db->query($sql);
         $config = array(
           'branchid' => $this->branchid,
@@ -137,7 +137,7 @@ class Module {
     }
 
     // kiểm tra quyền sử dụng
-    $sql = 'select * from `pet_test_permission` where module = "'. $this->module .'" and userid = '. $this->userid;
+    $sql = 'select * from pet_test_permission where module = "'. $this->module .'" and userid = '. $this->userid;
     $query = $this->db->query($sql);
 
     $user = $query->fetch_assoc();
@@ -148,7 +148,7 @@ class Module {
   function checkOvertime() {
     // lấy config module theo userid
     $time = time();
-    $sql = 'select * from `pet_test_config_time` where userid = '. $this->userid .' and module = "'. $this->module .'"';
+    $sql = 'select * from pet_test_config_time where userid = '. $this->userid .' and module = "'. $this->module .'"';
     $query = $this->db->query($sql);
     $userconfig = $query->fetch_assoc();
 
@@ -158,7 +158,7 @@ class Module {
     }
     else {
       // lấy config module theo vai trò
-      $sql = 'select * from `pet_test_config_module` where module = "'. $this->module .'" order by role desc';
+      $sql = 'select * from pet_test_config_module where module = "'. $this->module .'" order by role desc';
       $query = $this->db->query($sql);
       $moduleconfig = $query->fetch_assoc();
       if ($time < $moduleconfig['start'] || $time > $moduleconfig['end']) return 1;
@@ -170,7 +170,7 @@ class Module {
 
   function getUserById($id) {
     global $mysqli;
-    $sql = 'select * from `pet_users` where userid = '. $id;
+    $sql = 'select * from pet_users where userid = '. $id;
     $query = $mysqli->query($sql);
     return $query->fetch_assoc();
   }
@@ -180,7 +180,7 @@ class Module {
     $xtra = '';
     if ($daily) $xtra = 'where daily = 1';
   
-    $sql = 'select * from `pet_test_user`' . $xtra;
+    $sql = 'select * from pet_test_user' . $xtra;
     $query = $this->db->query($sql);
   
     while($row = $query->fetch_assoc()) {

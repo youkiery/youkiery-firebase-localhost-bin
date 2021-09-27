@@ -10,7 +10,7 @@ $data = array(
 );
 $data['calltime'] = totime($data['calltime']);
 
-$sql = "update `pet_test_usg2` set expecttime = $data[calltime], number = $data[number] where id = $data[id]";
+$sql = "update pet_test_usg2 set expecttime = $data[calltime], number = $data[number] where id = $data[id]";
 $mysqli->query($sql);
 
 $start = strtotime(date('Y/m/d'));

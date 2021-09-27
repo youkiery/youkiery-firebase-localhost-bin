@@ -12,7 +12,7 @@ class Expire extends Module {
     $start = time(); 
     $end = $start + 60 * 60 * 24 * 30 * 3;
     $half = $start + 60 * 60 * 24 * 30 * 3 / 2;
-    $sql = 'select a.*, b.name from `pet_test_storage_expire` a inner join `pet_test_storage_item` b on a.itemid = b.id where status = 0 and a.time < '. $end .' order by time';
+    $sql = 'select a.*, b.name from pet_test_storage_expire a inner join pet_test_storage_item b on a.itemid = b.id where status = 0 and a.time < '. $end .' order by time';
 
     $query = $this->db->query($sql);
 
@@ -84,13 +84,13 @@ class Expire extends Module {
   }
 
   function getCatalogById($id) {
-    $sql = 'select * from `pet_test_catalog` where id = ' . $id;
+    $sql = 'select * from pet_test_catalog where id = ' . $id;
     $query = $this->db->query($sql);
     return $query->fetch_assoc();
   }
 
   function remove($id) {
-    $sql = 'delete from `pet_test_expire` where id = '. $id;
+    $sql = 'delete from pet_test_expire where id = '. $id;
     $this->db->query($sql);
   }
 }

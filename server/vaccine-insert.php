@@ -16,7 +16,7 @@ else {
 $data->cometime = totime($data->cometime);
 $data->calltime = totime($data->calltime);
 
-$sql = "insert into pet_test_vaccine (customerid, typeid, cometime, calltime, note, status, called, recall, userid, time) values ($customer[id], $data->type, $data->cometime, $data->calltime, '', 0, 0, $data->calltime, $userid, ". time() .")";
+$sql = "insert into pet_test_vaccine2 (customerid, typeid, cometime, calltime, note, status, called, recall, userid, time) values ($customer[id], $data->type, $data->cometime, $data->calltime, '', 0, 0, $data->calltime, $userid, ". time() .")";
 query($sql);
 $result['status'] = 1;
 $result['new'] = $vaccine->getlist(true);

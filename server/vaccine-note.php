@@ -12,7 +12,7 @@ $filter = array(
   'status' => parseGetData('status', 0)
 );
 
-$sql = 'update `'. $vaccine->prefix .'` set note = "'. $data['text'] .'" where id = '. $data['id'];
+$sql = 'update '. $vaccine->prefix .' set note = "'. $data['text'] .'" where id = '. $data['id'];
 $query = $mysqli->query($sql);
 
 $result['status'] = 1;

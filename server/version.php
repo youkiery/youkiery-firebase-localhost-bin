@@ -1,7 +1,7 @@
 <?php 
 
 
-$sql = 'select * from `pet_config` where config_name = "thanhxuanversion"';
+$sql = 'select * from pet_config where config_name = "thanhxuanversion"';
 $query = $mysqli->query($sql);
 $row = $query->fetch_assoc();
 

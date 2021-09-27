@@ -12,7 +12,7 @@ if ($today !== $ctime) {
   $result['list'] = $spa->getList();
 }
 else {
-  $sql = "select id from pet_test_spa where utime > $data->ctime";
+  $sql = "select id from pet_test_spa2 where utime > $data->ctime";
   $result['status'] = 1;
 
   if (!empty(fetch($sql))) {

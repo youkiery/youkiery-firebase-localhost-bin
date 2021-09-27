@@ -46,22 +46,21 @@ if (isset($_GET['action']) && !empty($_GET['userid'])) $userid = $_GET['userid']
 else if (!empty($data->userid)) $userid = $data->userid;
 if (isset($_POST['action']) && !empty($_POST['userid'])) $userid = $_POST['userid'];
 
-
 if (!empty($action)) {
     define('ROOTDIR', NV_ROOTDIR . '/');
     include_once(ROOTDIR . 'global_function.php');
     include_once(ROOTDIR . 'module.php');
 
-    // $sql = "select * from pet_test_config where module = 'spa'";
+    // $sql = "select * from pet_test_config2 where module = 'spa'";
     // $type = obj($sql, 'name');
 
-    // $sql = "select * from pet_test_spa where time between ". strtotime(date('Y/m/d')) ." and ". time();
+    // $sql = "select * from pet_test_spa2 where time between ". strtotime(date('Y/m/d')) ." and ". time();
     // $list = all($sql);
 
     // foreach ($list as $key => $value) {
     //   foreach ($type as $row) {
     //     if ($value[$row['name']]) {
-    //       $sql = "insert into pet_test_spa_row (spaid, typeid) values($value[id], ". $row['id'] .")";
+    //       $sql = "insert into pet_test_spa2_row (spaid, typeid) values($value[id], ". $row['id'] .")";
     //       query($sql);
     //     }
     //   }

@@ -26,11 +26,11 @@ if (!empty($data->phone2) && !empty($data->name2)) {
   }
 }
 
-$sql = "insert into pet_test_spa (customerid, customerid2, doctorid, note, time, utime, weight, image) values($customer[id], $customer2[id], $userid, '$data->note', '" . time() . "', '" . time() . "', $data->weight, '". str_replace('@@', '%2F', implode(', ', $data->image))."')";
+$sql = "insert into pet_test_spa2 (customerid, customerid2, doctorid, note, time, utime, weight, image) values($customer[id], $customer2[id], $userid, '$data->note', '" . time() . "', '" . time() . "', $data->weight, '". str_replace('@@', '%2F', implode(', ', $data->image))."')";
 $id = insertid($sql);
 
 foreach ($data->option as $value) {
-  $sql = "insert into pet_test_spa_row (spaid, typeid) values($id, $value)";
+  $sql = "insert into pet_test_spa2_row (spaid, typeid) values($id, $value)";
   query($sql);
 }
 

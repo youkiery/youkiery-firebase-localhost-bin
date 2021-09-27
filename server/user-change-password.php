@@ -9,7 +9,7 @@ else {
     $old = $_GET['old'];
     $new = $_GET['new'];
 
-    $sql = 'select * from `pet_users` where userid = '. $userid;
+    $sql = 'select * from pet_users where userid = '. $userid;
     $query = $mysqli->query($sql);
     $user_info = $query->fetch_assoc();
 
@@ -17,7 +17,7 @@ else {
     else if (!$crypt->validate_password($old, $user_info['password'])) $result['messenger'] = 'Sai mật khẩu cũ';
     else {
       $password = $crypt->hash_password($new, '{SSHA512}');
-      $sql = 'update `pet_users` set password = "'. $password .'" where userid = '. $userid;
+      $sql = 'update pet_users set password = "'. $password .'" where userid = '. $userid;
       $mysqli->query($sql);
       $result['status'] = 1;
       $result['messenger'] = 'Đã đổi mật khẩu';

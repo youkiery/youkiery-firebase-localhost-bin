@@ -14,7 +14,7 @@ class Usg extends Module {
     $time = time();
     $limit = $time + 60 * 60 * 24 * 14;
 
-    $sql = 'select a.id, c.name, c.phone, a.usgtime, a.expecttime, a.note from `pet_test_usg2` a inner join `pet_test_pet` b on a.petid = b.id inner join `pet_test_customer` c on b.customerid = c.id where (b.name like "%'. $filter['keyword'] .'%" or c.name like "%'. $filter['keyword'] .'%" or c.phone like "%'. $filter['keyword'] .'%") and expecttime < '. $limit .' and a.status = '. $filter['status'] .' order by a.expecttime desc limit 50';
+    $sql = 'select a.id, c.name, c.phone, a.usgtime, a.expecttime, a.note from pet_test_usg2 a inner join pet_test_pet b on a.petid = b.id inner join pet_test_customer c on b.customerid = c.id where (b.name like "%'. $filter['keyword'] .'%" or c.name like "%'. $filter['keyword'] .'%" or c.phone like "%'. $filter['keyword'] .'%") and expecttime < '. $limit .' and a.status = '. $filter['status'] .' order by a.expecttime desc limit 50';
     $query = $this->db->query($sql);
 
     // tên thú cưng, sđt, vaccine, ngày tái chủng, ghi chú, trạng thại
@@ -43,7 +43,7 @@ class Usg extends Module {
 
   function getCustonerId($cid) {
     if (!empty($cid)) {
-      $sql = 'select * from `pet_test_customer` where id = ' . $cid;
+      $sql = 'select * from pet_test_customer where id = ' . $cid;
       $query = $this->db->query($sql);
   
       if (!empty($row = $query->fetch_assoc())) return $row;
@@ -53,7 +53,7 @@ class Usg extends Module {
 
   function getPetId($pid) {
     if (!empty($pid)) {
-      $sql = 'select * from `pet_test_pet` where id = ' . $pid;
+      $sql = 'select * from pet_test_pet where id = ' . $pid;
       $query = $this->db->query($sql);
   
       if (!empty($row = $query->fetch_assoc())) return $row;
@@ -93,7 +93,7 @@ class Usg extends Module {
 //   $time = time() + $vacconfigv2['filter'];
 //   $overtime = time();
 
-//   $sql = 'select a.id, a.usgtime, a.expecttime, a.expectnumber, a.doctorid, b.id as petid, b.name as petname, c.name as customer, c.phone from `' . VAC_PREFIX . '_usg2` a inner join `' . VAC_PREFIX . '_pet` b on a.petid = b.id inner join `' . VAC_PREFIX . '_customer` c on b.customerid = c.id where expecttime < ' . $time . ' and a.status = ' . $filter['status'] . ' order by expecttime asc';
+//   $sql = 'select a.id, a.usgtime, a.expecttime, a.expectnumber, a.doctorid, b.id as petid, b.name as petname, c.name as customer, c.phone from ' . VAC_PREFIX . '_usg2 a inner join ' . VAC_PREFIX . '_pet b on a.petid = b.id inner join ' . VAC_PREFIX . '_customer c on b.customerid = c.id where expecttime < ' . $time . ' and a.status = ' . $filter['status'] . ' order by expecttime asc';
 //   $query = $db->query($sql);
 
 //   $status = $filter['status'];
@@ -131,7 +131,7 @@ class Usg extends Module {
 //   $time = time() + $vacconfigv2['filter'];
 //   $overtime = time();
 
-//   $sql = 'select a.id, a.usgtime, a.birthtime, a.number, b.id as petid, b.name as petname, c.name as customer, c.phone from `' . VAC_PREFIX . '_usg2` a inner join `' . VAC_PREFIX . '_pet` b on a.petid = b.id inner join `' . VAC_PREFIX . '_customer` c on b.customerid = c.id where birthtime < ' . $time . ' and a.status = 2 order by birthtime asc';
+//   $sql = 'select a.id, a.usgtime, a.birthtime, a.number, b.id as petid, b.name as petname, c.name as customer, c.phone from ' . VAC_PREFIX . '_usg2 a inner join ' . VAC_PREFIX . '_pet b on a.petid = b.id inner join ' . VAC_PREFIX . '_customer c on b.customerid = c.id where birthtime < ' . $time . ' and a.status = 2 order by birthtime asc';
 //   $query = $db->query($sql);
 
 //   $recall = array(0 => 'left', 'right');
@@ -158,7 +158,7 @@ class Usg extends Module {
 //   $index = 1;
 //   $time = time() + $vacconfigv2['filter'];
 
-//   $sql = 'select a.id, a.usgtime, a.vaccinetime, a.number, b.id as petid, b.name as petname, c.name as customer, c.phone from `' . VAC_PREFIX . '_usg2` a inner join `' . VAC_PREFIX . '_pet` b on a.petid = b.id inner join `' . VAC_PREFIX . '_customer` c on b.customerid = c.id where vaccinetime < ' . $time . ' and a.status = 3 order by vaccinetime asc';
+//   $sql = 'select a.id, a.usgtime, a.vaccinetime, a.number, b.id as petid, b.name as petname, c.name as customer, c.phone from ' . VAC_PREFIX . '_usg2 a inner join ' . VAC_PREFIX . '_pet b on a.petid = b.id inner join ' . VAC_PREFIX . '_customer c on b.customerid = c.id where vaccinetime < ' . $time . ' and a.status = 3 order by vaccinetime asc';
 //   $query = $db->query($sql);
 
 //   $recall = array(0 => 'left', 'right');

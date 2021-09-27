@@ -77,7 +77,7 @@ function fetch($sql) {
 
 function checkUserId($userid) {
     global $mysqli;
-    $sql = 'select * from `pet_users` where userid = '. $userid;
+    $sql = 'select * from pet_users where userid = '. $userid;
     $query = $mysqli->query($sql);
 
     if (!empty($user = $query->fetch_assoc())) {
@@ -101,7 +101,7 @@ function cmp3($a, $b) {
 function checkUserRole($userid) {
   global $mysqli;
   if (!empty(checkUserId($userid))) {
-      $sql = 'select * from `pet_test_user` where userid = '. $userid;
+      $sql = 'select * from pet_test_user where userid = '. $userid;
       $query = $mysqli->query($sql);
   
       $user = $query->fetch_assoc();
@@ -113,7 +113,7 @@ function checkUserRole($userid) {
 function getUserBranch($branch) {
   global $userid, $mysqli;
   try {
-    $sql = 'select b.* from `pet_setting_user` a inner join `pet_setting_branch` b on a.branch = b.id where b.prefix = "'. $branch .'" and a.userid = ' . $userid;
+    $sql = 'select b.* from pet_setting_user a inner join pet_setting_branch b on a.branch = b.id where b.prefix = "'. $branch .'" and a.userid = ' . $userid;
     $query = $mysqli->query($sql);
     $user = $query->fetch_assoc();
 

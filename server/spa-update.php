@@ -26,14 +26,14 @@ if (!empty($data->phone2) && !empty($data->name2)) {
   }
 }
 
-$sql = "update pet_test_spa set customerid = $customer[id], customerid2 = $customer2[id], doctorid = $userid, note = '$data->note', image = '". str_replace('@@', '%2F', implode(', ', $data->image))."', weight = $data->weight, utime = ". time() .", luser = $userid, ltime = ". time() ." where id = $data->id";
+$sql = "update pet_test_spa2 set customerid = $customer[id], customerid2 = $customer2[id], doctorid = $userid, note = '$data->note', image = '". str_replace('@@', '%2F', implode(', ', $data->image))."', weight = $data->weight, utime = ". time() .", luser = $userid, ltime = ". time() .", status = 0 where id = $data->id";
 query($sql);  
 
-$sql = "delete from pet_test_spa_row where spaid = $data->id";
+$sql = "delete from pet_test_spa2_row where spaid = $data->id";
 query($sql);
 
 foreach ($data->option as $value) {
-  $sql = "insert into pet_test_spa_row (spaid, typeid) values($data->id, $value)";
+  $sql = "insert into pet_test_spa2_row (spaid, typeid) values($data->id, $value)";
   query($sql);
 }
 
