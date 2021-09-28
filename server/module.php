@@ -148,7 +148,7 @@ class Module {
   function checkOvertime() {
     // lấy config module theo userid
     $time = time();
-    $sql = 'select * from pet_test_config_time where userid = '. $this->userid .' and module = "'. $this->module .'"';
+    $sql = 'select * from pet_test_config2_time where userid = '. $this->userid .' and module = "'. $this->module .'"';
     $query = $this->db->query($sql);
     $userconfig = $query->fetch_assoc();
 
@@ -158,7 +158,7 @@ class Module {
     }
     else {
       // lấy config module theo vai trò
-      $sql = 'select * from pet_test_config_module where module = "'. $this->module .'" order by role desc';
+      $sql = 'select * from pet_test_config2_module where module = "'. $this->module .'" order by role desc';
       $query = $this->db->query($sql);
       $moduleconfig = $query->fetch_assoc();
       if ($time < $moduleconfig['start'] || $time > $moduleconfig['end']) return 1;

@@ -46,8 +46,11 @@ class Spa extends Module {
   
     $time = strtotime(date('Y/m/d', $data->time / 1000));
     $end = $time + 60 * 60 * 24 - 1;
-    $sql = "select * from (select a.*, b.name, b.phone, c.first_name as user from pet_test_spa2 a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where (time between $time and $end) and status < 3 order by utime desc) as z union (select a.*, b.name, b.phone, c.first_name as user from pet_test_spa2 a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where (time between $time and $end) and status = 3 order by utime desc)";
+    $sql = "select a.*, b.name, b.phone, c.first_name as user from pet_test_spa2 a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where (time between $time and $end) and status < 3 order by utime desc";
     $spa = all($sql);
+    
+    $sql = "select a.*, b.name, b.phone, c.first_name as user from pet_test_spa2 a inner join pet_test_customer b on a.customerid = b.id inner join pet_users c on a.doctorid = c.userid where (time between $time and $end) and status = 3 order by utime desc";
+    array_merge($array, all($sql));
   
     $sql = "select * from pet_test_config2 where module = 'spa'";
     $option_list = obj($sql, 'name');

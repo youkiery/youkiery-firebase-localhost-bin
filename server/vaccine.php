@@ -157,7 +157,7 @@ class Vaccine extends Module {
   //   $time = time();
   //   $limit = $time + 60 * 60 * 24 * 14;
 
-  //   $sql = 'select * from pet_test_vaccine where calltime < '. $limit .' and status = '. $filter['status'] .' order by calltime desc limit 50';
+  //   $sql = 'select * from pet_test_vaccine2 where calltime < '. $limit .' and status = '. $filter['status'] .' order by calltime desc limit 50';
   //   $query = $this->db->query($sql);
 
   //   // tên thú cưng, sđt, vaccine, ngày tái chủng, ghi chú, trạng thại
@@ -280,13 +280,13 @@ class Vaccine extends Module {
   // }
 
   // function getWorkById($workid) {
-  //   $sql = 'select * from pet_test_vaccine where id = ' . $workid;
+  //   $sql = 'select * from pet_test_vaccine2 where id = ' . $workid;
   //   $query = $this->db->query($sql);
   //   return $query->fetch_assoc();
   // }
 
   // function checkWorkId($workid) {
-  //   $sql = 'select * from pet_test_vaccine where id = '. $workid;
+  //   $sql = 'select * from pet_test_vaccine2 where id = '. $workid;
   //   $query = $this->db->query($sql);
 
   //   if (!empty($query->fetch_assoc())) return true;
@@ -294,7 +294,7 @@ class Vaccine extends Module {
   // }
 
   // function insertWork($data, $time) {
-  //   $sql = 'insert into pet_test_vaccine (cometime, calltime, last_time, post_user, edit_user, userid, depart, customer, content, process, confirm, review, note) value("'. $data['cometime'] .'", "'. $data['calltime'] .'", '. $time .', '. $this->userid .', '. $this->userid .', '. $data['employ'] .', 0, 0, "'. $data['content'] .'", 0, 0, "", "")';
+  //   $sql = 'insert into pet_test_vaccine2 (cometime, calltime, last_time, post_user, edit_user, userid, depart, customer, content, process, confirm, review, note) value("'. $data['cometime'] .'", "'. $data['calltime'] .'", '. $time .', '. $this->userid .', '. $this->userid .', '. $data['employ'] .', 0, 0, "'. $data['content'] .'", 0, 0, "", "")';
 
   //   if ($this->db->query($sql)) {
   //     $id = $this->db->insert_id;
@@ -307,7 +307,7 @@ class Vaccine extends Module {
   //   $xtra = '';
   //   if ($this->thisrole() > 1) $xtra .= ', calltime = ' . $data['calltime'] . ', content = "' . $data['content'] . '"';
 
-  //   $sql = 'update pet_test_vaccine set process = '. $data['process'] .', note = "'. $data['note'] .'", image = "'. $data['image'] .'" '. $xtra .' where id = '. $data['id'];
+  //   $sql = 'update pet_test_vaccine2 set process = '. $data['process'] .', note = "'. $data['note'] .'", image = "'. $data['image'] .'" '. $xtra .' where id = '. $data['id'];
   //   if ($this->db->query($sql)) {
   //     if ($data['process'] == 100) $this->insertNotify(COMPLETE_NOTIFY, $data['id'], $time);
   //     else $this->insertNotify(EDIT_NOTIFY, $data['id'], $time);
@@ -317,7 +317,7 @@ class Vaccine extends Module {
 
   // function doneWork($data, $time) {
   //   $xtra = '';
-  //   $sql = 'update pet_test_vaccine set process = 100 where id = '. $data['id'];
+  //   $sql = 'update pet_test_vaccine2 set process = 100 where id = '. $data['id'];
   //   if ($this->db->query($sql)) {
   //     $this->insertNotify(EDIT_NOTIFY, $data['id'], $time);
   //     $this->setLastUpdate($time);
@@ -325,7 +325,7 @@ class Vaccine extends Module {
   // }
 
   // function removeWork($data, $time) {
-  //   $sql = 'update pet_test_vaccine set active = 0 where id = '. $data['id'];
+  //   $sql = 'update pet_test_vaccine2 set active = 0 where id = '. $data['id'];
   //   if ($this->db->query($sql)) {
   //     $this->setLastUpdate($time);
   //     $this->insertNotify(REMOVE_NOTIFY, $data['id'], $time);

@@ -8,3 +8,5 @@ else $sql = "update pet_test_spa2 set utime = ". time() .", status = 2 where id 
 query($sql);
 
 $result['status'] = 2;
+$result['time'] = time();
+$result['list'] = $spa->getList();

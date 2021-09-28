@@ -16,6 +16,7 @@ else {
   $result['status'] = 1;
 
   if (!empty(fetch($sql))) {
+    $result['time'] = time();
     $result['list'] = $spa->getList();
   }
 }

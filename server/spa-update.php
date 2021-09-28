@@ -37,5 +37,6 @@ foreach ($data->option as $value) {
   query($sql);
 }
 
+$result['time'] = time();
 $result['list'] = $spa->getList();
 $result['status'] = 1;

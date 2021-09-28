@@ -12,5 +12,6 @@ if (!empty(fetch($sql))) {
 else $result['doctor'] = array();
 
 $result['status'] = 1;
+$result['time'] = time();
 $result['type'] = $spa->getType();
 $result['list'] = $spa->getList();
